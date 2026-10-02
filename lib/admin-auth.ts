@@ -48,14 +48,20 @@ export function isValidAdminSession(token: string | undefined) {
 }
 
 export function passwordsMatch(password: string) {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected) return false;
-
+  const configuredPasswords = [
+    process.env.ADMIN_PASSWORD,
+    process.env.ADMIN_PASSWORD_2,
+  ].filter((value): value is string => Boolean(value));
   const actualBuffer = Buffer.from(password);
-  const expectedBuffer = Buffer.from(expected);
 
-  return (
-    actualBuffer.length === expectedBuffer.length &&
-    timingSafeEqual(actualBuffer, expectedBuffer)
-  );
+  let matches = false;
+  for (const expected of configuredPasswords) {
+    const expectedBuffer = Buffer.from(expected);
+    const sameLength = actualBuffer.length === expectedBuffer.length;
+    const matchesPassword =
+      sameLength && timingSafeEqual(actualBuffer, expectedBuffer);
+    matches = matches || matchesPassword;
+  }
+
+  return matches;
 }

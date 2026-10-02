@@ -29,10 +29,13 @@ testing order submission or the admin dashboard.
    - `GOOGLE_SHEETS_SPREADSHEET_ID`: the ID between `/d/` and `/edit` in the
      spreadsheet URL.
    - `ADMIN_PASSWORD`: a strong password for `/admin`.
+   - `ADMIN_PASSWORD_2`: an optional second, different password for another
+     admin. Both passwords grant the same access; set each as a separate
+     single-line secret.
    - `ADMIN_SESSION_SECRET`: a separate, long random secret used to sign the
      admin session cookie.
 
-Sign in at `/admin`. The overview summarizes order statuses and stock alerts;
+Either configured password can sign in at `/admin`. The overview summarizes order statuses and stock alerts;
 the orders tab supports search, status filtering, and workflow updates; inventory
 lets you edit each size, price, stock quantity, and availability; and storefront
 content lets you edit the landing-page copy, FAQ, and reviews. Leave stock

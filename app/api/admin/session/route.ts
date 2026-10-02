@@ -18,7 +18,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_SESSION_SECRET) {
+  if (
+    (!process.env.ADMIN_PASSWORD && !process.env.ADMIN_PASSWORD_2) ||
+    !process.env.ADMIN_SESSION_SECRET
+  ) {
     return Response.json(
       { error: "إعداد دخول الإدارة غير مكتمل على الخادم." },
       { status: 503 },
