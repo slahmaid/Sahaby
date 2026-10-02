@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قرآن</title>
+  <link rel="icon" href="Favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #06254a;
+      --crimson: #a71c32;
+      --ink: #172151;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Cairo", "Segoe UI", sans-serif;
+      color: var(--navy);
+      background: #fff;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><path d='M70 8 L92 48 L132 70 L92 92 L70 132 L48 92 L8 70 L48 48 Z' fill='none' stroke='%2306254a' stroke-opacity='0.07' stroke-width='1'/></svg>");
+      background-size: 180px 180px;
+    }
+
+    .header {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      z-index: 20;
+      display: flex;
+      flex-direction: row;
+      direction: ltr;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 76px;
+      padding: 12px 18px 12px 14px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(6, 37, 74, 0.08);
+      box-shadow:
+        0 10px 30px rgba(6, 37, 74, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(22px) saturate(165%);
+      -webkit-backdrop-filter: blur(22px) saturate(165%);
+    }
+
+    /* Hover swap adapted from Uiverse.io by Gaurav-WebDev */
+    .button {
+      height: 50px;
+      width: 168px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      font-family: "Cairo", "Segoe UI", sans-serif;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .button:hover {
+      box-shadow: 0.5px 0.5px 28px rgba(167, 28, 50, 0.45);
+    }
+
+    .button:focus-visible {
+      outline: 2px solid var(--navy);
+      outline-offset: 3px;
+    }
+
+    .type1::after {
+      content: "اطلب الان";
+      height: 50px;
+      width: 168px;
+      background-color: var(--crimson);
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(50px);
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .type1::before {
+      content: "ابدأ القراءة";
+      height: 50px;
+      width: 168px;
+      background-color: #fff;
+      color: var(--crimson);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(0) scale(1.2);
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .type1:hover::after {
+      transform: translateY(0) scale(1.2);
+    }
+
+    .type1:hover::before {
+      transform: translateY(-50px) scale(0) rotate(120deg);
+    }
+
+    .logo {
+      display: block;
+      height: 52px;
+      width: auto;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 140px 24px 64px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.4rem, 6vw, 4.6rem);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 36rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(6, 37, 74, 0.72);
+    }
+
+    @media (max-width: 640px) {
+      .header {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        min-height: 64px;
+        padding: 10px 12px;
+        border-radius: 18px;
+      }
+
+      .logo { height: 40px; }
+      .button,
+      .type1::before,
+      .type1::after {
+        width: 148px;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .header {
+        background: #fff;
+        backdrop-filter: none;
+      }
+
+      .button:hover { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="button type1" href="#start" aria-label="ابدأ القراءة"></a>
+    <img class="logo" src="Logo.svg" alt="شعار قرآن" />
+  </header>
+
+  <main class="hero" id="start">
+    <div>
+      <h1>نور يتلى</h1>
+      <p>صفحة هادئة للقراءة والتدبّر، بخطّ واضح وخلفية تُظهر زجاج الترويسة.</p>
+    </div>
+  </main>
+</body>
+</html>
