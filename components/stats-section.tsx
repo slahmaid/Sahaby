@@ -9,7 +9,6 @@ export function StatsSection() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const stats = [
-    { value: 2000, prefix: '+', label: 'نسخة تم تسليمها' },
     { value: 8, prefix: '', label: 'مدينة وصلنا إليها' },
     { value: 2000, prefix: '+', label: 'طلب مكتمل' },
   ]
@@ -29,7 +28,7 @@ export function StatsSection() {
           </p>
         </div>
 
-        <div className="mt-12 grid w-full gap-4 sm:grid-cols-3">
+        <div className="mt-12 grid w-full gap-4 sm:grid-cols-2">
           {stats.map((stat) => (
             <article
               key={stat.label}
