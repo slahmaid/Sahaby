@@ -5,19 +5,13 @@ import { useInView } from 'motion/react'
 
 import { AnimatedNumber } from '@/components/core/animated-number'
 
-export function StatsSection({
-  completedOrders = 0,
-  citiesServed = 0,
-}: {
-  completedOrders?: number;
-  citiesServed?: number;
-}) {
+export function StatsSection() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const stats = [
-    { value: completedOrders, label: 'نسخة تم تسليمها' },
-    { value: citiesServed, label: 'مدينة وصلنا إليها' },
-    { value: completedOrders, label: 'طلب مكتمل' },
+    { value: 2000, prefix: '+', label: 'نسخة تم تسليمها' },
+    { value: 8, prefix: '', label: 'مدينة وصلنا إليها' },
+    { value: 2000, prefix: '+', label: 'طلب مكتمل' },
   ]
 
   return (
@@ -31,8 +25,7 @@ export function StatsSection({
             أرقام من القرّاء والمدن
           </h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-[#06254a]/70">
-            أرقام الطلبات المكتملة والمدن التي وصلنا إليها، وتُحدّث تلقائيًا مع
-            إدارة الطلبات.
+            نفخر بوصول صحابي إلى القرّاء في مدن مختلفة.
           </p>
         </div>
 
@@ -42,14 +35,20 @@ export function StatsSection({
               key={stat.label}
               className="rounded-2xl border border-[#06254a]/10 bg-white px-6 py-6 text-center"
             >
-              <AnimatedNumber
-                className="inline-flex items-center justify-center text-4xl font-black tracking-tight text-[#06254a] sm:text-5xl"
-                springOptions={{
-                  bounce: 0,
-                  duration: 2000,
-                }}
-                value={inView ? stat.value : 0}
-              />
+              <p
+                aria-label={`${stat.prefix}${stat.value}`}
+                className="flex items-center justify-center text-4xl font-black tracking-tight text-[#06254a] sm:text-5xl"
+              >
+                {stat.prefix}
+                <AnimatedNumber
+                  className="inline-flex items-center justify-center"
+                  springOptions={{
+                    bounce: 0,
+                    duration: 2000,
+                  }}
+                  value={inView ? stat.value : 0}
+                />
+              </p>
               <p className="mt-2 text-sm text-[#06254a]/60">{stat.label}</p>
             </article>
           ))}

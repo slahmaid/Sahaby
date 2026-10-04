@@ -10,8 +10,6 @@ import { Hero10, type Hero10Props } from "@/components/ui/hero-10";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
 import {
   getStorefrontData,
-  listOrders,
-  type Order,
 } from "@/lib/google-sheets";
 import {
   DEFAULT_PRODUCTS,
@@ -34,19 +32,11 @@ export default async function Home() {
 
   let products = DEFAULT_PRODUCTS;
   let settings = DEFAULT_STORE_SETTINGS;
-  let orders: Order[] = [];
   try {
-    const [storefront, storedOrders] = await Promise.all([
-      getStorefrontData(),
-      listOrders(),
-    ]);
-    ({ products, settings } = storefront);
-    orders = storedOrders;
+    ({ products, settings } = await getStorefrontData());
   } catch (error) {
     console.error("Unable to load storefront data; using defaults:", error);
   }
-  const completedOrders = orders.filter((order) => order.status === "مكتمل");
-  const citiesServed = new Set(completedOrders.map((order) => order.city)).size;
   const reviewItems = parseReviewContent(settings.reviewContent);
   const availableProducts = products.filter(
     (product) => product.active && product.stock !== 0,
@@ -92,10 +82,7 @@ export default async function Home() {
         <ParallaxScrollFeatureSection
           deliveryDetails={`${settings.shippingMessage} · ${settings.deliveryEstimate}`}
         />
-        <StatsSection
-          citiesServed={citiesServed}
-          completedOrders={completedOrders.length}
-        />
+        <StatsSection />
         {reviewItems.length ? <ReviewsSection items={reviewItems} /> : null}
         <OrderForm id="order-bottom" products={products} settings={settings} />
         <FaqSection items={parseFaqContent(settings.faqContent)} />
