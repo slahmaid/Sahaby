@@ -1,116 +1,78 @@
-'use client'
-
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-
-import { cn } from '@/lib/utils'
-
-const sections = [
-  {
-    id: 1,
-    title: 'خط واضح',
-    description:
-      'حروف كبيرة ومريحة، تُقرأ دون إجهاد، في البيت وفي الطريق.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=900&h=900&q=80',
-    imageAlt: 'مصحف مفتوح',
-    reverse: false,
-  },
-  {
-    id: 2,
-    title: 'مقاس يناسب اليد',
-    description:
-      'متوسط للحمل، وكبير لجلسة القراءة. اختر ما يلزمك قبل الطلب.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=900&h=900&q=80',
-    imageAlt: 'خط قرآني',
-    reverse: true,
-  },
-  {
-    id: 3,
-    title: 'تفاصيل التوصيل',
-    description: '',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=900&h=900&q=80',
-    imageAlt: 'مسجد',
-    reverse: false,
-  },
-] as const
+import Link from 'next/link'
+import { BookOpenText, Ruler, Truck, ArrowLeft } from 'lucide-react'
 
 export function ParallaxScrollFeatureSection({
   deliveryDetails,
 }: {
   deliveryDetails: string;
 }) {
-  const ref0 = useRef<HTMLDivElement>(null)
-  const ref1 = useRef<HTMLDivElement>(null)
-  const ref2 = useRef<HTMLDivElement>(null)
-  const refs = [ref0, ref1, ref2]
-
-  const { scrollYProgress: progress0 } = useScroll({
-    target: ref0,
-    offset: ['start end', 'center start'],
-  })
-  const { scrollYProgress: progress1 } = useScroll({
-    target: ref1,
-    offset: ['start end', 'center start'],
-  })
-  const { scrollYProgress: progress2 } = useScroll({
-    target: ref2,
-    offset: ['start end', 'center start'],
-  })
-
-  const opacity0 = useTransform(progress0, [0, 0.7], [0, 1])
-  const opacity1 = useTransform(progress1, [0, 0.7], [0, 1])
-  const opacity2 = useTransform(progress2, [0, 0.7], [0, 1])
-  const clip0 = useTransform(progress0, [0, 0.7], ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'])
-  const clip1 = useTransform(progress1, [0, 0.7], ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'])
-  const clip2 = useTransform(progress2, [0, 0.7], ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'])
-  const shift0 = useTransform(progress0, [0, 1], [-50, 0])
-  const shift1 = useTransform(progress1, [0, 1], [-50, 0])
-  const shift2 = useTransform(progress2, [0, 1], [-50, 0])
-
-  const motions = [
-    { opacity: opacity0, clip: clip0, shift: shift0 },
-    { opacity: opacity1, clip: clip1, shift: shift1 },
-    { opacity: opacity2, clip: clip2, shift: shift2 },
+  const features = [
+    {
+      icon: BookOpenText,
+      number: '01',
+      title: 'قراءة أوضح',
+      description: 'خط واضح ومريح لتمنح قراءتك اليومية مساحة أهدأ.',
+      tone: 'bg-[#06254a]/[0.05] text-[#06254a]',
+    },
+    {
+      icon: Ruler,
+      number: '02',
+      title: 'مقاسان للاختيار',
+      description: 'متوسط للحمل والتنقل، وكبير لجلسة القراءة في البيت.',
+      tone: 'bg-[#a71c32]/[0.07] text-[#a71c32]',
+    },
+    {
+      icon: Truck,
+      number: '03',
+      title: 'توصيل واضح',
+      description: deliveryDetails,
+      tone: 'bg-emerald-50 text-emerald-800',
+    },
   ]
 
   return (
-    <section id="about" className="w-full">
-      <div className="mx-auto flex max-w-6xl flex-col px-6">
-        {sections.map((section, index) => (
-          <div
-            key={section.id}
-            ref={refs[index]}
-            className={cn(
-              'flex min-h-[80vh] flex-col items-center justify-center gap-10 py-16 md:h-screen md:flex-row md:gap-24',
-              section.reverse && 'md:flex-row-reverse',
-            )}
-          >
-            <motion.div style={{ y: motions[index].shift }} className="max-w-sm text-center md:text-start">
-              <h2 className="font-serif text-4xl text-[#06254a] sm:text-5xl md:text-6xl">
-                {section.title}
-              </h2>
-              <p className="mt-6 text-base text-[#06254a]/70">
-                {index === 2 ? deliveryDetails : section.description}
-              </p>
-            </motion.div>
-            <motion.div
-              style={{
-                opacity: motions[index].opacity,
-                clipPath: motions[index].clip,
-              }}
-              className="relative"
+    <section id="about" className="scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-sm font-bold text-[#a71c32]">تجربة صحابي</p>
+          <h2 className="mt-2 font-serif text-3xl font-bold text-[#06254a] sm:text-4xl">
+            كل ما تحتاجه لتبدأ القراءة
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-[#06254a]/65 sm:text-base">
+            اختر المقاس، راجع التفاصيل، ثم أرسل طلبك بخطوات بسيطة.
+          </p>
+        </div>
+
+        <div className="mt-9 grid gap-4 md:grid-cols-3">
+          {features.map(({ icon: Icon, number, title, description, tone }) => (
+            <article
+              className="group relative overflow-hidden rounded-2xl border border-[#06254a]/[0.08] bg-white p-5 shadow-[0_8px_24px_rgba(6,37,74,0.04)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(6,37,74,0.09)] sm:p-6"
+              key={number}
             >
-              <img
-                src={section.imageUrl}
-                alt={section.imageAlt}
-                className="size-64 object-cover sm:size-80"
-              />
-            </motion.div>
-          </div>
-        ))}
+              <div className="flex items-start justify-between">
+                <span className={`flex size-12 items-center justify-center rounded-2xl ${tone}`}>
+                  <Icon aria-hidden="true" className="size-6" />
+                </span>
+                <span className="font-mono text-xs font-bold tracking-widest text-[#06254a]/25">
+                  {number}
+                </span>
+              </div>
+              <h3 className="mt-5 text-lg font-black text-[#06254a]">{title}</h3>
+              <p className="mt-2 min-h-14 text-sm leading-7 text-[#06254a]/65">
+                {description}
+              </p>
+              {number === '02' ? (
+                <Link
+                  className="mt-4 inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#a71c32]"
+                  href="#order"
+                >
+                  اختر مقاسك
+                  <ArrowLeft aria-hidden="true" className="size-4" />
+                </Link>
+              ) : null}
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )

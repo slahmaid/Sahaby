@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { motion, useReducedMotion, type Variants } from 'motion/react'
+import { Check, Truck } from 'lucide-react'
 import Balancer from 'react-wrap-balancer'
 
 import { cn } from '@/lib/utils'
@@ -224,7 +225,8 @@ export function Hero10({
   )
 
   const offerElement = offerNote && (
-    <p className="rounded-full border border-primary/15 bg-primary/5 px-4 py-2 text-sm font-bold text-foreground">
+    <p className="rounded-full border border-[#a71c32]/15 bg-white/80 px-4 py-2.5 text-sm font-bold text-foreground shadow-sm">
+      <Truck aria-hidden="true" className="me-2 inline size-4 text-primary" />
       {offerNote}
     </p>
   )
@@ -239,12 +241,14 @@ export function Hero10({
   ) : null
 
   return (
-    <section className="bg-background relative isolate w-full overflow-hidden">
+    <section className="relative isolate w-full overflow-hidden bg-[#f7f4ed]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -end-24 -top-24 size-80 rounded-full bg-[#a71c32]/[0.05] blur-3xl"
+      />
       <motion.div
         className={cn(
-          'relative z-10 mx-auto flex max-w-6xl flex-col items-center px-6 text-center',
-          vs.section,
-          vs.content,
+          'relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-5 py-12 sm:px-8 sm:py-16 md:grid-cols-2 md:gap-10 lg:px-12 lg:py-20',
         )}
         variants={animate ? container : undefined}
         initial={false}
@@ -253,22 +257,58 @@ export function Hero10({
         <Reveal
           active={animate}
           className={cn(
-            'flex w-full max-w-2xl flex-col items-center',
-            vs.header,
+            'flex w-full flex-col items-center gap-5 text-center md:items-start md:text-start',
           )}
         >
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#06254a]/10 bg-white/80 px-3 py-1.5 text-xs font-bold text-[#06254a]/75 shadow-sm">
+            <span className="size-2 rounded-full bg-[#a71c32]" />
+            صحابي · قراءة أقرب إلى يومك
+          </span>
           {titleElement}
           {descriptionElement}
-        </Reveal>
-
-        <Reveal active={animate} className="flex flex-col items-center gap-4">
-          {ctasElement}
+          <div className="mt-1 flex w-full flex-col items-center gap-4 md:items-start">
+            {ctasElement}
+          </div>
           {offerElement}
-          {socialProofElement}
+          {socialProofElement ? (
+            <p className="flex items-center gap-2 text-sm font-semibold text-[#06254a]/65">
+              <Check aria-hidden="true" className="size-4 text-emerald-700" />
+              {socialProof}
+            </p>
+          ) : null}
         </Reveal>
 
-        <div className={cn('mx-auto w-full', vs.fan)}>{mediaElement}</div>
+        <div className="relative mx-auto w-full max-w-xl md:max-w-none">
+          <div
+            aria-hidden="true"
+            className="absolute inset-8 rounded-[2rem] bg-[#06254a]/[0.06] blur-2xl"
+          />
+          <div className="relative rounded-[2rem] border border-white/80 bg-white/55 p-4 shadow-[0_24px_70px_rgba(6,37,74,0.12)] backdrop-blur-sm sm:p-6">
+            {mediaElement}
+            <div className="mx-auto mt-3 flex max-w-sm items-center justify-center gap-2 text-center text-xs font-semibold text-[#06254a]/60">
+              <span className="size-1.5 rounded-full bg-[#a71c32]" />
+              {titleHighlight || 'صحابي'} · مساحة هادئة لقراءة يومية
+            </div>
+          </div>
+        </div>
       </motion.div>
+      <div className="relative z-10 border-t border-[#06254a]/[0.07] bg-white/65">
+        <div className="mx-auto grid max-w-7xl grid-cols-3 divide-x divide-x-reverse divide-[#06254a]/10 px-3 py-4 text-center sm:px-8 sm:py-5">
+          {['اختر المقاس المناسب', 'أرسل بيانات الطلب', 'نتواصل للتأكيد'].map(
+            (step, index) => (
+              <div
+                className="flex items-center justify-center gap-2 px-1 text-[10px] font-bold text-[#06254a]/70 sm:gap-3 sm:text-sm"
+                key={step}
+              >
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#06254a] text-[10px] text-white sm:size-7 sm:text-xs">
+                  {index + 1}
+                </span>
+                {step}
+              </div>
+            ),
+          )}
+        </div>
+      </div>
     </section>
   )
 }

@@ -95,17 +95,26 @@ export function OrderForm({
   }
 
   return (
-    <section id={id} className="scroll-mt-24 px-4 pb-20 sm:px-6 sm:pb-24">
-      <div className="mx-auto w-full max-w-lg">
-        <h2 className="mb-2 text-center font-serif text-3xl text-[#06254a] sm:text-4xl">
-          {settings.orderTitle}
-        </h2>
-        <p className="mb-4 text-center text-sm text-[#06254a]/70">
-          {settings.orderDescription}
-        </p>
-        <p className="mx-auto mb-6 w-fit rounded-full border border-[#a71c32]/20 bg-[#a71c32]/10 px-4 py-2 text-sm font-bold text-[#a71c32]">
-          {settings.shippingMessage}
-        </p>
+    <section
+      id={id}
+      className="scroll-mt-24 bg-gradient-to-b from-white to-[#f7f4ed] px-4 py-12 sm:px-6 sm:py-16"
+    >
+      <div className="mx-auto w-full max-w-2xl rounded-[1.75rem] border border-[#06254a]/[0.08] bg-white p-5 shadow-[0_20px_60px_rgba(6,37,74,0.09)] sm:p-8">
+        <div className="text-center">
+          <p className="text-xs font-black tracking-wide text-[#a71c32]">
+            خطوة واحدة تفصلك
+          </p>
+          <h2 className="mt-2 mb-2 font-serif text-3xl font-bold text-[#06254a] sm:text-4xl">
+            {settings.orderTitle}
+          </h2>
+          <p className="mx-auto mb-4 max-w-lg text-sm leading-6 text-[#06254a]/70">
+            {settings.orderDescription}
+          </p>
+          <p className="mx-auto mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-[#a71c32]/15 bg-[#a71c32]/[0.06] px-4 py-2 text-sm font-bold text-[#a71c32]">
+            <span className="size-2 rounded-full bg-[#a71c32]" />
+            {settings.shippingMessage}
+          </p>
+        </div>
 
         <form className="flex flex-col gap-5" onSubmit={onSubmit}>
             <fieldset className="grid grid-cols-2 gap-3 sm:gap-4">
