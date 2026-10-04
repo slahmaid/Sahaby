@@ -47,6 +47,13 @@ export default async function Home() {
   }
   const completedOrders = orders.filter((order) => order.status === "مكتمل");
   const citiesServed = new Set(completedOrders.map((order) => order.city)).size;
+  const reviewItems = parseReviewContent(settings.reviewContent);
+  const availableProducts = products.filter(
+    (product) => product.active && product.stock !== 0,
+  );
+  const lowestPrice = availableProducts.length
+    ? Math.min(...availableProducts.map((product) => product.price))
+    : undefined;
 
   const hero = {
     title: settings.heroTitle,
@@ -54,18 +61,22 @@ export default async function Home() {
     titleHighlight: settings.heroHighlight,
     description: settings.heroDescription,
     socialProof: settings.socialProof,
+    offerNote:
+      lowestPrice === undefined
+        ? "المقاسات غير متاحة حاليًا"
+        : `يبدأ السعر من ${lowestPrice} درهم · ${settings.shippingMessage}`,
     ...heroImages,
     animation: "none" as const,
   primaryCTA: {
     ctaEnabled: true,
-    text: "ابدأ القراءة",
-    link: "#reading",
+    text: "اطلب الآن",
+    link: "#order",
     variant: "default",
     size: "lg",
   },
   secondaryCTA: {
     ctaEnabled: true,
-    text: "تعرّف أكثر",
+    text: "اكتشف المزايا",
     link: "#about",
     variant: "outline",
     size: "lg",
@@ -78,12 +89,14 @@ export default async function Home() {
       <main id="start" className="pt-16 pb-28 sm:pt-24 md:pb-0">
         <Hero10 {...hero} />
         <OrderForm products={products} settings={settings} />
-        <ParallaxScrollFeatureSection />
+        <ParallaxScrollFeatureSection
+          deliveryDetails={`${settings.shippingMessage} · ${settings.deliveryEstimate}`}
+        />
         <StatsSection
           citiesServed={citiesServed}
           completedOrders={completedOrders.length}
         />
-        <ReviewsSection items={parseReviewContent(settings.reviewContent)} />
+        {reviewItems.length ? <ReviewsSection items={reviewItems} /> : null}
         <OrderForm id="order-bottom" products={products} settings={settings} />
         <FaqSection items={parseFaqContent(settings.faqContent)} />
       </main>

@@ -24,14 +24,21 @@ export function MobileOrderBar({
     : undefined;
 
   useEffect(() => {
-    const footer = document.querySelector("footer");
-    if (!footer) return;
+    const targets = document.querySelectorAll("#order, #order-bottom, footer");
+    if (!targets.length) return;
+    const visibleTargets = new Set<Element>();
 
     const observer = new IntersectionObserver(
-      ([entry]) => setHidden(entry.isIntersecting),
-      { threshold: 0.01 },
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visibleTargets.add(entry.target);
+          else visibleTargets.delete(entry.target);
+        }
+        setHidden(visibleTargets.size > 0);
+      },
+      { threshold: 0.05 },
     );
-    observer.observe(footer);
+    targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, []);
 
@@ -48,7 +55,9 @@ export function MobileOrderBar({
         <div className="min-w-0">
           <p className="text-xs text-[#06254a]/60">{settings.shippingMessage}</p>
           <p className="text-lg font-black leading-none text-[#a71c32]">
-            {lowestPrice === undefined ? "غير متوفر" : `${lowestPrice} درهم`}
+            {lowestPrice === undefined
+              ? "غير متوفر"
+              : `ابتداءً من ${lowestPrice} درهم`}
           </p>
         </div>
         {lowestPrice === undefined ? (

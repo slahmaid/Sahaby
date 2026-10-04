@@ -289,14 +289,15 @@ main {
 
 .inputBox input {
   width: 100%;
-  padding: 15px 20px;
+  min-height: 52px;
+  padding: 15px 16px;
   outline: none;
   background: transparent;
-  border-radius: 5px;
+  border-radius: 12px;
   color: #06254a;
-  text-align: center;
-  border: 2.5px solid #06254a;
-  font-size: 1em;
+  text-align: start;
+  border: 1px solid rgba(6, 37, 74, 0.2);
+  font-size: 16px;
   font-family: inherit;
 }
 
@@ -306,22 +307,18 @@ main {
 
 .inputBox input:focus-visible {
   border-color: #a71c32;
+  box-shadow: 0 0 0 3px rgba(167, 28, 50, 0.12);
 }
 
-.inputBox span {
+.inputBox label {
   position: absolute;
-  left: 50%;
-  right: auto;
-  top: 0;
-  font-size: 0.75em;
-  transform: translate(-50%, -50%);
-  padding: 0 6px 1px 5px;
-  border-radius: 2px;
+  inset-inline-start: 14px;
+  top: -0.55em;
+  padding: 0 6px;
   background: #fff;
-  border: 2.5px solid #06254a;
   color: #06254a;
-  line-height: 1.4;
-  pointer-events: none;
+  font-size: 0.75em;
+  font-weight: 700;
 }
 
 @keyframes price-pulse {

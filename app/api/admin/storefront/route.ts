@@ -35,7 +35,7 @@ export async function PUT(request: Request) {
       key === "faqContent" || key === "reviewContent" ? 5000 : 500;
     if (
       typeof value !== "string" ||
-      value.trim().length === 0 ||
+      (key !== "reviewContent" && value.trim().length === 0) ||
       value.length > maxLength
     ) {
       return Response.json(

@@ -85,6 +85,28 @@ export default async function ThankYouPage({
           ) : null}
           . سنتواصل معك قريبًا لتأكيد الطلب.
         </p>
+        <section
+          aria-labelledby="next-steps-title"
+          className="mt-7 w-full max-w-md rounded-2xl border border-[#06254a]/10 bg-white p-5 text-start shadow-sm"
+        >
+          <h2 id="next-steps-title" className="font-bold text-[#06254a]">
+            ماذا بعد؟
+          </h2>
+          <ol className="mt-3 space-y-3 text-sm leading-6 text-[#06254a]/70">
+            <li className="flex gap-3">
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#06254a] text-xs font-bold text-white">
+                ١
+              </span>
+              نتواصل معك على رقم الهاتف لتأكيد تفاصيل الطلب.
+            </li>
+            <li className="flex gap-3">
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#06254a] text-xs font-bold text-white">
+                ٢
+              </span>
+              ننسق موعد التوصيل حسب مدينتك.
+            </li>
+          </ol>
+        </section>
         {name || phone || city ? (
           <dl className="mt-8 w-full max-w-md divide-y divide-[#06254a]/10 rounded-2xl border-2 border-[#06254a] bg-white text-start">
             <div className="flex items-center justify-between gap-4 px-5 py-3">
@@ -116,7 +138,7 @@ export default async function ThankYouPage({
           .
         </p>
         <p className="mt-4 w-fit rounded-full border border-[#a71c32]/20 bg-[#a71c32]/10 px-4 py-1.5 text-sm font-bold text-[#a71c32]">
-          التوصيل مجاني
+          {storefront.settings.shippingMessage}
         </p>
         <Link
           href="/"

@@ -3,6 +3,7 @@ import { ORDER_STATUSES, type Order, type OrderStatus } from "@/lib/orders";
 import {
   DEFAULT_PRODUCTS,
   DEFAULT_STORE_SETTINGS,
+  LEGACY_SAMPLE_REVIEW_CONTENT,
   PRODUCT_IDS,
   type ProductId,
   type StoreProduct,
@@ -405,6 +406,12 @@ export async function getStorefrontData(): Promise<StorefrontData> {
 
   for (const [key, value] of settingsData.rows.slice(1)) {
     if (key in settings && typeof value === "string") {
+      if (
+        key === "reviewContent" &&
+        value.trim() === LEGACY_SAMPLE_REVIEW_CONTENT
+      ) {
+        continue;
+      }
       settings[key as keyof StoreSettings] = value;
     }
   }

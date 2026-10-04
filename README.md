@@ -46,5 +46,7 @@ committed order is cancelled. New orders do not reserve stock.
 `Orders` columns are order ID, created time, customer name, phone, city, size,
 and status. `Inventory` stores size, price, stock, and availability.
 `StoreSettings` stores the editable storefront text. FAQ lines use
-`question|answer`; review lines use `name|role or city|review text`. Keep the
-spreadsheet private; it contains customer contact details.
+`question|answer`; optional review lines use `name|role or city|review text`.
+Only publish genuine customer reviews with their permission; leave the review
+field blank to hide that section. Keep the spreadsheet private; it contains
+customer contact details.

@@ -28,8 +28,8 @@ const sections = [
   },
   {
     id: 3,
-    title: 'توصيل مجاني',
-    description: 'نصل إليك في مدينتك، من غير تكلفة إضافية على الطلب.',
+    title: 'تفاصيل التوصيل',
+    description: '',
     imageUrl:
       'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=900&h=900&q=80',
     imageAlt: 'مسجد',
@@ -37,7 +37,11 @@ const sections = [
   },
 ] as const
 
-export function ParallaxScrollFeatureSection() {
+export function ParallaxScrollFeatureSection({
+  deliveryDetails,
+}: {
+  deliveryDetails: string;
+}) {
   const ref0 = useRef<HTMLDivElement>(null)
   const ref1 = useRef<HTMLDivElement>(null)
   const ref2 = useRef<HTMLDivElement>(null)
@@ -88,7 +92,9 @@ export function ParallaxScrollFeatureSection() {
               <h2 className="font-serif text-4xl text-[#06254a] sm:text-5xl md:text-6xl">
                 {section.title}
               </h2>
-              <p className="mt-6 text-base text-[#06254a]/70">{section.description}</p>
+              <p className="mt-6 text-base text-[#06254a]/70">
+                {index === 2 ? deliveryDetails : section.description}
+              </p>
             </motion.div>
             <motion.div
               style={{

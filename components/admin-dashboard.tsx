@@ -521,7 +521,7 @@ const settingFields: {
   {
     key: "reviewContent",
     label: "تجارب العملاء",
-    help: "سطر لكل تجربة بصيغة: الاسم|الصفة أو المدينة|نص التجربة.",
+    help: "اختياري. أضف تجارب حقيقية بموافقة أصحابها، سطر لكل تجربة بصيغة: الاسم|الصفة أو المدينة|نص التجربة. اتركه فارغًا لإخفاء القسم.",
     multiline: true,
   },
 ];
@@ -605,7 +605,7 @@ function ContentPanel({
                     [key]: event.target.value,
                   }))
                 }
-                required
+                required={key !== "reviewContent"}
                 value={draft[key]}
               />
             ) : (

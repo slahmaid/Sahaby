@@ -14,6 +14,7 @@ export interface Hero10Props {
   titleHighlight?: string
   description: string
   socialProof?: string
+  offerNote?: string
   images: string[]
   imageAlts?: string[]
   animation?: 'none' | 'subtle'
@@ -167,6 +168,7 @@ export function Hero10({
   titleHighlight,
   description,
   socialProof,
+  offerNote,
   images,
   imageAlts,
   animation = 'none',
@@ -221,6 +223,12 @@ export function Hero10({
     <p className="text-muted-foreground text-xs font-medium">{socialProof}</p>
   )
 
+  const offerElement = offerNote && (
+    <p className="rounded-full border border-primary/15 bg-primary/5 px-4 py-2 text-sm font-bold text-foreground">
+      {offerNote}
+    </p>
+  )
+
   const mediaElement = images?.length ? (
     <ImageFan
       images={images}
@@ -255,6 +263,7 @@ export function Hero10({
 
         <Reveal active={animate} className="flex flex-col items-center gap-4">
           {ctasElement}
+          {offerElement}
           {socialProofElement}
         </Reveal>
 

@@ -47,7 +47,7 @@ export function OrderForm({
       ...visual,
       id: visual.id,
       name: product?.name ?? (visual.id === "large" ? "كبير" : "متوسط"),
-      price: `${product?.price ?? 999} درهم`,
+      price: product?.price ?? 999,
       active: product?.active ?? true,
       outOfStock: product?.stock === 0,
     };
@@ -95,7 +95,7 @@ export function OrderForm({
   }
 
   return (
-    <section id={id} className="px-6 pb-24">
+    <section id={id} className="scroll-mt-24 px-4 pb-20 sm:px-6 sm:pb-24">
       <div className="mx-auto w-full max-w-lg">
         <h2 className="mb-2 text-center font-serif text-3xl text-[#06254a] sm:text-4xl">
           {settings.orderTitle}
@@ -103,31 +103,34 @@ export function OrderForm({
         <p className="mb-4 text-center text-sm text-[#06254a]/70">
           {settings.orderDescription}
         </p>
-        <p className="mx-auto mb-8 w-fit rounded-full border border-[#a71c32]/20 bg-[#a71c32]/10 px-4 py-1.5 text-sm font-bold text-[#a71c32]">
+        <p className="mx-auto mb-6 w-fit rounded-full border border-[#a71c32]/20 bg-[#a71c32]/10 px-4 py-2 text-sm font-bold text-[#a71c32]">
           {settings.shippingMessage}
         </p>
 
-        <form className="flex flex-col gap-6" onSubmit={onSubmit}>
-            <fieldset className="grid grid-cols-2 gap-4">
+        <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+            <fieldset className="grid grid-cols-2 gap-3 sm:gap-4">
               <legend className="sr-only">المقاس</legend>
               {variants.map((item) => {
                 const selected = variant === item.id;
                 const unavailable = !item.active || item.outOfStock;
+                const inputId = `${id}-variant-${item.id}`;
                 return (
                   <label
                     key={item.id}
-                    className={`overflow-hidden rounded-xl border bg-white text-center ${
+                    htmlFor={inputId}
+                    className={`relative overflow-hidden rounded-xl border bg-white text-center transition-colors ${
                       unavailable ? "cursor-not-allowed opacity-55" : "cursor-pointer"
                     } ${
                       selected
-                        ? "border-[#a71c32] ring-2 ring-[#a71c32]"
-                        : "border-[#06254a]/15"
+                        ? "border-[#a71c32] ring-2 ring-[#a71c32]/70"
+                        : "border-[#06254a]/15 hover:border-[#06254a]/40"
                     }`}
                   >
                     <input
-                      className="sr-only"
+                      className="peer sr-only"
+                      id={inputId}
                       type="radio"
-                      name="variant"
+                      name={`${id}-variant`}
                       value={item.id}
                       checked={selected}
                       disabled={unavailable}
@@ -136,14 +139,16 @@ export function OrderForm({
                     <img
                       src={item.image}
                       alt={item.alt}
-                      className="aspect-square w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[4/3] w-full object-cover sm:aspect-square"
                     />
-                    <span className="block px-3 py-3">
+                    <span className="block px-2 py-3 sm:px-3">
                       <span className="block font-bold text-[#06254a]">
                         {item.name}
                       </span>
-                      <span className="price-pulse mt-1 block text-2xl font-black tracking-tight text-[#a71c32]">
-                        {item.price}
+                      <span className="mt-1 block text-xl font-black tracking-tight text-[#a71c32] sm:text-2xl">
+                        {item.price} درهم
                       </span>
                       {unavailable ? (
                         <span className="mt-1 block text-xs font-bold text-[#a71c32]">
@@ -155,68 +160,70 @@ export function OrderForm({
                 );
               })}
             </fieldset>
+            {selectedVariant ? (
+              <div
+                aria-live="polite"
+                className="flex items-center justify-between gap-3 rounded-xl bg-[#06254a]/[0.04] px-4 py-3"
+              >
+                <span className="text-sm text-[#06254a]/70">
+                  اختيارك:{" "}
+                  <span className="font-bold text-[#06254a]">
+                    {selectedVariant.name}
+                  </span>
+                </span>
+                <span className="shrink-0 font-black text-[#a71c32]">
+                  {selectedVariant.price} درهم
+                </span>
+              </div>
+            ) : null}
             <div className="inputBox">
               <input
+                id={`${id}-name`}
                 name="name"
                 type="text"
                 autoComplete="name"
+                maxLength={100}
                 placeholder="اكتب اسمك"
                 required
               />
-              <span>الاسم</span>
+              <label htmlFor={`${id}-name`}>الاسم</label>
             </div>
             <div className="inputBox">
               <input
+                id={`${id}-phone`}
                 name="phone"
                 type="tel"
                 inputMode="tel"
                 autoComplete="tel"
                 dir="ltr"
+                maxLength={30}
                 placeholder="06 00 00 00 00"
                 required
               />
-              <span>رقم الهاتف</span>
+              <label htmlFor={`${id}-phone`}>رقم الهاتف</label>
             </div>
             <div className="inputBox">
               <input
+                id={`${id}-city`}
                 name="city"
                 type="text"
                 autoComplete="address-level2"
+                maxLength={100}
                 placeholder="اكتب مدينتك"
                 required
               />
-              <span>المدينة</span>
+              <label htmlFor={`${id}-city`}>المدينة</label>
             </div>
             <button
-              className="group relative h-14 w-56 self-center rounded-2xl border border-[#06254a]/10 bg-white text-center text-xl font-semibold text-[#06254a] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#06254a] disabled:cursor-wait disabled:opacity-70"
+              className="min-h-14 w-full rounded-2xl bg-[#a71c32] px-5 py-3 text-lg font-bold text-white shadow-sm transition hover:bg-[#8f172b] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#06254a] disabled:cursor-wait disabled:opacity-70"
               type="submit"
               disabled={isSubmitting || selectedUnavailable}
             >
-              <div className="absolute top-[4px] left-1 z-10 flex h-12 w-1/4 items-center justify-center rounded-xl bg-[#a71c32] duration-500 group-hover:w-[216px]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 1024 1024"
-                  height="25"
-                  width="25"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                    fill="#ffffff"
-                  />
-                  <path
-                    d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                    fill="#ffffff"
-                  />
-                </svg>
-              </div>
-              <p className="translate-x-2">
-                {isSubmitting
-                  ? "جارٍ الإرسال..."
-                  : selectedUnavailable
-                    ? "غير متاح حاليًا"
-                    : "إرسال الطلب"}
-              </p>
+              {isSubmitting
+                ? "جارٍ إرسال الطلب..."
+                : selectedUnavailable
+                  ? "غير متاح حاليًا"
+                  : `أرسل الطلب · ${selectedVariant?.price ?? ""} درهم`}
             </button>
             {error ? (
               <p className="text-center text-sm font-semibold text-[#a71c32]" role="alert">
